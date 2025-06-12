@@ -70,6 +70,11 @@ void exibirCartaComCalculos(CartaCidade carta, int numero) {
     printf("Super Poder: %.2f\n", carta.super_poder);
 }
 
+int comparar(double a, double b, int menorVence) {
+    if (a == b) return 0;
+    return (menorVence ? (a < b) : (a > b)) ? 1 : 2;
+}
+
 int main() {
     CartaCidade carta1, carta2;
 
@@ -78,6 +83,33 @@ int main() {
 
     exibirCartaComCalculos(carta1, 1);
     exibirCartaComCalculos(carta2, 2);
+
+    int opcao;
+    printf("\nEscolha o atributo para comparar:\n");
+    printf("1 - População\n2 - Área\n3 - PIB\n4 - Pontos Turísticos\n5 - Densidade Populacional\n6 - PIB per Capita\n7 - Super Poder\nOpção: ");
+    scanf("%d", &opcao);
+
+    double valor1, valor2;
+    int menorVence = 0;
+
+    switch (opcao) {
+        case 1: valor1 = carta1.populacao; valor2 = carta2.populacao; break;
+        case 2: valor1 = carta1.area; valor2 = carta2.area; break;
+        case 3: valor1 = carta1.pib; valor2 = carta2.pib; break;
+        case 4: valor1 = carta1.pontos_turisticos; valor2 = carta2.pontos_turisticos; break;
+        case 5: valor1 = carta1.densidade; valor2 = carta2.densidade; menorVence = 1; break;
+        case 6: valor1 = carta1.pib_per_capita; valor2 = carta2.pib_per_capita; break;
+        case 7: valor1 = carta1.super_poder; valor2 = carta2.super_poder; break;
+        default: printf("Opção inválida.\n"); return 1;
+    }
+
+    int resultado = comparar(valor1, valor2, menorVence);
+
+    printf("\n--- Resultado da Comparação ---\n");
+    if (resultado == 0)
+        printf("Empate no atributo selecionado.\n");
+    else
+        printf("Carta %d venceu!\n", resultado);
 
     return 0;
 }
